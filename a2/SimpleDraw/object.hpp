@@ -6,7 +6,7 @@
 typedef enum shapeType
 {
 	RECTANGLE = 1,
-	CIRCLE
+	CIRCLE = 2
 } ShapeType;
 
 /**
@@ -39,8 +39,8 @@ typedef struct shape
 typedef struct node
 {
 	Shape *object;
-	Node *prev;
-	Node *next;
+	node *prev;
+	node *next;
 } Node;
 
 /**
@@ -76,15 +76,69 @@ void deleteNode(List *list, Node **selectp);
  */
 void clearList(List *list);
 
+/**
+ * Draws the given shape to the screen.
+ *
+ * @param object The shape to draw.
+ */
 void drawShape(Shape *object);
+
+/**
+ * Draws all shapes in the given list to the screen.
+ *
+ * @param list The list of shapes to draw.
+ */
 void drawShapeHighLight(Shape *object);
+
+/**
+ * Draws all shapes in the given list to the screen.
+ *
+ * @param list The list of shapes to draw.
+ */
 void drawList(List *list);
 
+/**
+ * Sets the pixel at the given coordinates to the given color.
+ */
 void setPixel(GLint x, GLint y);
-void circlePlotPoints(const GLint &xc, const GLint &yc, const GLint &x, const GLint &y);
-void circleMidpoint(GLint x1, GLint y1, GLint x2, GLint y2);
-void circlePlotPointsFill(GLint x1, GLint y1, GLint x, GLint y);
-void circleMidpointFill(GLint x1, GLint y1, GLint x2, GLint y2);
-void plotObject(GLint x1, GLint y1, GLint x2, GLint y2, GLfloat r1, GLfloat g1, GLfloat b1, GLint t1, GLint s1);
 
+/**
+ * Draws the important points of the given circle to the screen.
+ *
+ * @param xc The x-coordinate of the center of the circle.
+ * @param yc The y-coordinate of the center of the circle.
+ * @param x The x-coordinate of the point to draw.
+ * @param y The y-coordinate of the point to draw.
+ */
+void circlePlotPoints(const GLint &xc, const GLint &yc, const GLint &x, const GLint &y);
+
+/**
+ * Draws a circle to the screen using the midpoint circle algorithm.
+ *
+ * @param x1 The x-coordinate of a point on the circle.
+ * @param y1 The y-coordinate of a point on the circle.
+ * @param x2 The x-coordinate of another point on the circle.
+ * @param y2 The y-coordinate of another point on the circle.
+ */
+void circleMidpoint(GLint x1, GLint y1, GLint x2, GLint y2);
+
+/**
+ * Draws the important points of the given circle to the screen with fill.
+ *
+ * @param xc The x-coordinate of the center of the circle.
+ * @param yc The y-coordinate of the center of the circle.
+ * @param x The x-coordinate of the point to draw.
+ * @param y The y-coordinate of the point to draw.
+ */
+void circlePlotPointsFill(GLint x1, GLint y1, GLint x, GLint y);
+
+/**
+ * Draws a circle to the screen using the midpoint circle algorithm with fill.
+ *
+ * @param x1 The x-coordinate of a point on the circle.
+ * @param y1 The y-coordinate of a point on the circle.
+ * @param x2 The x-coordinate of another point on the circle.
+ * @param y2 The y-coordinate of another point on the circle.
+ */
+void circleMidpointFill(GLint x1, GLint y1, GLint x2, GLint y2);
 #endif

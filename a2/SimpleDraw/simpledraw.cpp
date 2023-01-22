@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <GL/glut.h>
 #include "object.hpp"
 #include "menu.hpp"
@@ -27,9 +26,9 @@ GLfloat strokeG = 0.0;
 GLfloat strokeB = 0.0;
 GLint strokeW = 1;
 
-List objects = {0};	 // object list and initialization
-Node *selectedShape; // pointing to selected node
-Shape tempShape;	 // variable to store temp object data when drawing.
+List objects = {0};
+Node *selectedShape;
+Shape tempShape;
 
 /**
  * Called when the program is being created - initializes the state and sets up
@@ -40,7 +39,7 @@ void init(void)
 	glutInitDisplayMode(GLUT_DOUBLE); // GLUT_DOUBLE for double frame buffer
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(width, height);
-	glutCreateWindow("SimpleDraw (Nausher Rao)");
+	glutCreateWindow("SimpleDraw (Nausher Rao");
 
 	glClearColor(1.0, 1.0, 1.0, 0.0);
 	glMatrixMode(GL_PROJECTION);
@@ -73,7 +72,6 @@ void drawObjectList()
  */
 void onMouseAction(GLint button, GLint action, GLint xMouse, GLint yMouse)
 {
-
 	if (operationMode == 0 && isMenuOpen == GL_FALSE)
 	{
 		if (button == GLUT_LEFT_BUTTON)
@@ -94,7 +92,7 @@ void onMouseAction(GLint button, GLint action, GLint xMouse, GLint yMouse)
 				tempShape.x1 = xMouse;
 				tempShape.y1 = yMouse;
 
-				inDrawMode = GL_TRUE; // start dragging
+				inDrawMode = GL_TRUE;
 				if (shapeType == RECTANGLE)
 				{
 					tempShape.x2 = xMouse;
@@ -108,7 +106,7 @@ void onMouseAction(GLint button, GLint action, GLint xMouse, GLint yMouse)
 			else if (action == GLUT_UP && inDrawMode == GL_TRUE)
 			{
 
-				inDrawMode = GL_FALSE; // end of dragging
+				inDrawMode = GL_FALSE;
 				if (shapeType == RECTANGLE)
 				{
 					tempShape.x2 = xMouse;
@@ -119,11 +117,22 @@ void onMouseAction(GLint button, GLint action, GLint xMouse, GLint yMouse)
 					tempShape.x2 = abs(xMouse - tempShape.x1);
 				}
 
-				// create a new shape object, copy the tempObj values to the new object,
-				// and the new object to the object list
-				Shape *newShape = (Shape *)malloc(sizeof(Shape));
-				*newShape = tempShape;
-				insert(&objects, newShape);
+				Shape *shapeObj = (Shape *)malloc(sizeof(Shape));
+				shapeObj->type = tempShape.type;
+				shapeObj->fillR = tempShape.fillR;
+				shapeObj->fillG = tempShape.fillG;
+				shapeObj->fillB = tempShape.fillB;
+				shapeObj->strokeR = tempShape.strokeR;
+				shapeObj->strokeG = tempShape.strokeG;
+				shapeObj->strokeB = tempShape.strokeB;
+				shapeObj->strokeW = tempShape.strokeW;
+				shapeObj->x1 = tempShape.x1;
+				shapeObj->y1 = tempShape.y1;
+				shapeObj->x2 = tempShape.x2;
+				shapeObj->y2 = tempShape.y2;
+
+				insert(&objects, shapeObj);
+				shapeObj = NULL;
 			}
 		}
 	}
@@ -142,11 +151,8 @@ void onMouseAction(GLint button, GLint action, GLint xMouse, GLint yMouse)
 	{
 		if (button == GLUT_LEFT_BUTTON)
 		{
-
 			if (action == GLUT_DOWN)
 			{
-				// select node and copy the select node data to temp node for drawing
-				// set mouse postion to xbegin, and ybegin
 				selectedShape = select(xMouse, yMouse);
 				if (selectedShape != NULL)
 				{
@@ -156,8 +162,13 @@ void onMouseAction(GLint button, GLint action, GLint xMouse, GLint yMouse)
 			}
 			else if (action == GLUT_UP)
 			{
-				// get the vector from (xbegin, ybegin) to the new mouse position
-				// use the vector to update the properties of moving object.
+				if (selectedShape != NULL)
+				{
+					selectedShape->object->x1 += xMouse - xbegin;
+					selectedShape->object->y1 += yMouse - ybegin;
+					selectedShape->object->x2 += xMouse - xbegin;
+					selectedShape->object->y2 += yMouse - ybegin;
+				}
 			}
 		}
 	}
@@ -173,7 +184,30 @@ void onMouseMove(GLint xMouse, GLint yMouse)
 {
 	// in drawing mode, use xMouse and yMouse value to update the tempObj
 	// in edit move mode, use (xbegin, ybegin) and (xMouse, yMouse) to update the selected object
-
+	if (operationMode == 0 && inDrawMode == GL_TRUE)
+	{
+		if (shapeType == RECTANGLE)
+		{
+			tempShape.x2 = xMouse;
+			tempShape.y2 = yMouse;
+		}
+		else if (shapeType == CIRCLE)
+		{
+			tempShape.x2 = abs(xMouse - tempShape.x1);
+		}
+	}
+	else if (operationMode == 1 && inMoveMode == GL_TRUE)
+	{
+		if (selectedShape != NULL)
+		{
+			selectedShape->object->x1 += xMouse - xbegin;
+			selectedShape->object->y1 += yMouse - ybegin;
+			selectedShape->object->x2 += xMouse - xbegin;
+			selectedShape->object->y2 += yMouse - ybegin;
+			xbegin = xMouse;
+			ybegin = yMouse;
+		}
+	}
 	glutPostRedisplay();
 	glFlush();
 }
@@ -195,6 +229,7 @@ void onResize(GLint newWidth, GLint newHeight)
 }
 
 /**
+ *
  * Main entry function that sets up the OpenGL context, registers callbacks, and starts the main loop.
  */
 int main(int argc, char **argv)
@@ -203,14 +238,12 @@ int main(int argc, char **argv)
 	setvbuf(stderr, NULL, _IONBF, 0);
 
 	glutInit(&argc, argv);
-	addMenu();
+	createContextMenu();
 	init();
 	glutDisplayFunc(drawObjectList);
 	glutReshapeFunc(onResize);
 	glutMouseFunc(onMouseAction);
 	glutMotionFunc(onMouseMove);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-
 	glutMainLoop();
 	return 0;
 }

@@ -5,7 +5,8 @@
 #include "file.hpp"
 
 extern List objects;
-extern GLsizei height, width;
+extern GLsizei width;
+extern GLsizei height;
 
 extern GLint operationMode;
 extern GLboolean inDrawMode;
@@ -90,7 +91,9 @@ void createContextMenu()
 
 void clear()
 {
-	// ...
+	glClearColor(1.0, 1.0, 1.0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	clearList(&objects);
 }
 
 void processMenu(GLint menuOption)
@@ -112,21 +115,61 @@ void processMenu(GLint menuOption)
 
 void processDrawSubMenu(GLint typeOption)
 {
+	if (typeOption == 0)
+	{
+		shapeType = RECTANGLE;
+	}
+	else if (typeOption == 1)
+	{
+		shapeType = CIRCLE;
+	}
+
 	operationMode = 0;
 	inMoveMode = GL_FALSE;
-	//
 }
 
 void processFileSubMenu(GLint fileOption)
 {
-	// ..
+	if (fileOption == 1)
+	{
+		saveSVG("output.svg", width, height);
+	}
+	else if (fileOption == 2)
+	{
+		openSVG("output.svg");
+	}
+	else if (fileOption == 3)
+	{
+		saveBitmap("output.bmp", 0, 0, width, height);
+	}
 }
 
 void processEditSubMenu(GLint editOption)
 {
 	operationMode = 1;
-	inMoveMode = 0;
-	// ...
+	inMoveMode = GL_FALSE;
+
+	if (editOption == 2)
+	{
+		if (selectedShape != NULL)
+			remove(&selectedShape);
+	}
+	else if (editOption == 3)
+	{
+		if (selectedShape != NULL)
+			moveFront(selectedShape);
+	}
+	else if (editOption == 4)
+	{
+		if (selectedShape != NULL)
+			moveBack(selectedShape);
+	}
+	else if (editOption == 5)
+	{
+		selectedShape = NULL;
+		inMoveMode = GL_TRUE;
+	}
+
 	glutPostRedisplay();
 }
 
@@ -136,15 +179,101 @@ void processStyleSubMenu(GLint styleOption)
 
 void processStyleFillColorSubMenu(GLint colorOption)
 {
-	// ...
+	switch (colorOption)
+	{
+	case 1:
+		fillR = 1.0;
+		fillG = 0.0;
+		fillB = 0.0;
+		break;
+
+	case 2:
+		fillR = 0.0;
+		fillG = 1.0;
+		fillB = 0.0;
+		break;
+
+	case 3:
+		fillR = 0.0;
+		fillG = 0.0;
+		fillB = 1.0;
+		break;
+
+	case 4:
+		fillR = 0.0;
+		fillG = 0.0;
+		fillB = 0.0;
+		break;
+
+	case 5:
+		fillR = 1.0;
+		fillG = 1.0;
+		fillB = 1.0;
+		break;
+
+	case 6:
+		fillR = 1.0;
+		fillG = 1.0;
+		fillB = 0.0;
+		break;
+
+	case 7:
+		fillR = 0.0;
+		fillG = 1.0;
+		fillB = 1.0;
+		break;
+	}
 }
 
 void processStyleStrokeColorSubMenu(GLint colorOption)
 {
-	// ...
+	switch (colorOption)
+	{
+	case 1:
+		strokeR = 1.0;
+		strokeG = 0.0;
+		strokeB = 0.0;
+		break;
+
+	case 2:
+		strokeR = 0.0;
+		strokeG = 1.0;
+		strokeB = 0.0;
+		break;
+
+	case 3:
+		strokeR = 0.0;
+		strokeG = 0.0;
+		strokeB = 1.0;
+		break;
+
+	case 4:
+		strokeR = 0.0;
+		strokeG = 0.0;
+		strokeB = 0.0;
+		break;
+
+	case 5:
+		strokeR = 1.0;
+		strokeG = 1.0;
+		strokeB = 1.0;
+		break;
+
+	case 6:
+		strokeR = 1.0;
+		strokeG = 1.0;
+		strokeB = 0.0;
+		break;
+
+	case 7:
+		strokeR = 0.0;
+		strokeG = 1.0;
+		strokeB = 1.0;
+		break;
+	}
 }
 
 void processStyleStrokeWidthSubMenu(GLint width)
 {
-	// ....
+	strokeW = width;
 }

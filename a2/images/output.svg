@@ -1,0 +1,9 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="800" height="600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<circle cx="164" cy="100" r="90" fill="rgb(0,255,0)" stroke="rgb(255,0,0)" stroke-width="4" />
+<circle cx="525" cy="409" r="128" fill="rgb(0,255,0)" stroke="rgb(255,0,0)" stroke-width="4" />
+<circle cx="62" cy="103" r="0" fill="rgb(0,255,0)" stroke="rgb(255,0,0)" stroke-width="4" />
+<circle cx="137" cy="110" r="0" fill="rgb(0,255,0)" stroke="rgb(255,0,0)" stroke-width="4" />
+</svg>

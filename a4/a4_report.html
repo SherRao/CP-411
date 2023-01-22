@@ -1,0 +1,110 @@
+<h1 id="a4-report">A4 Report</h1>
+<p>Author: Nausher Rao Date: 2022-11-09 Check <a
+href="readme.txt">readme.txt</a> for course work statement and
+self-evaluation.</p>
+<h2 id="q1-culling-lighting-shading-short_answer">Q1 Culling, Lighting,
+Shading (short_answer)</h2>
+<h3 id="q1.1-concepts-of-culling">Q1.1 Concepts of culling</h3>
+<ol class="incremental" type="1">
+<li><p>Culling is a method of determining objects that visible to the
+camera, and removing the surfaces that aren’t visible. This is different
+to clipping, which is the method of not drawing primitives to the screen
+if they are out of the camera’s view.</p></li>
+<li><p>Object precision algorithms remove hidden surfaces with a lot of
+accuracy, but are computationally intense and might not be suitable for
+real-time rendering. An example of this is the z-buffer algorithm, which
+temporarily stores the depth of each pixel in a scene, and then
+determines which surfaces shouldn’t be drawn. Image precision algorithms
+are faster and more efficient than object precision algorithms, but
+aren’t as accurate. An example of an image precision algorithm is the
+painter’s algorithm, which sorts surfaces in a scene by depth and draws
+surfaces in order of increasing importance (back-to-front). Overall, the
+differences are that image precision algorithms are faster and less
+accurate, while object precision algorithms are slower and more
+accurate. Image precision is based on the camera, using pixel depth of a
+line/point to determine whether or not to draw it, while Object
+precision takes into account geometrical relations of objects in the
+scene.</p></li>
+</ol>
+<h3 id="q1.2-culling-computing">Q1.2 Culling computing</h3>
+<figure>
+<img src="images/q1.2.jpg" style="width:90.0%" alt="Q 1.2" />
+<figcaption aria-hidden="true">Q 1.2</figcaption>
+</figure>
+<h3 id="q1.3-concepts-of-lighting-and-shading">Q1.3 Concepts of lighting
+and shading</h3>
+<ol class="incremental" type="1">
+<li>A light source model determines the colour, position, direction, and
+intensity of the illumination model for a virtual light sources. Three
+different light source models are:
+<ol class="incremental" type="1">
+<li>Point - light coming from a point.</li>
+<li>Directional - light coming from a direction.</li>
+<li>Ambient - No source, reflected between surfaces.</li>
+</ol></li>
+<li>A light reflection model determines how light sources are reflected
+by object surfaces to simulate reflection, which can change with colour,
+roughness, material type, and position from a light source. Three
+different reflection models are:
+<ol class="incremental" type="1">
+<li>Diffuse - reflection of a perfect rough surface.</li>
+<li>Specular - reflection off of a shiny surface.</li>
+<li>Ambient - ambient light reflected by nearby objects.</li>
+</ol></li>
+<li>A shading model determines the pixel colour of a part of an object,
+the calculations depending on the amount shade of an object based off
+its reflection model. Three shading models are:
+<ol class="incremental" type="1">
+<li>Constant - Calculate the shade of a section of a polygon, and giving
+it to all parts.</li>
+<li>Gouraud - Calculate the shade of each vertex of a polygon.</li>
+<li>Phong - Calculating the normal of each vertex, which then gets the
+normal of a pixel in the polygon, which is then applied as the shade
+colour of that pixel.</li>
+</ol></li>
+</ol>
+<h3 id="q1.4-lighting-computing">Q1.4 Lighting computing</h3>
+<figure>
+<img src="images/q1.2.jpg" style="width:90.0%" alt="Q 1.4" />
+<figcaption aria-hidden="true">Q 1.4</figcaption>
+</figure>
+<h2 id="q2-opengl-culling-lighting-shading-lab-practice">Q2 OpenGL
+culling, lighting, shading (lab practice)</h2>
+<h3 id="q2.1-hidden-surface-removal">Q2.1 Hidden surface removal</h3>
+<figure>
+<img src="images/q2.1.png" style="width:90.0%" alt="Q 2.1" />
+<figcaption aria-hidden="true">Q 2.1</figcaption>
+</figure>
+<h3 id="q2.2-lighting-and-shading">Q2.2 Lighting and Shading</h3>
+<figure>
+<img src="images/q2.2.png" style="width:90.0%" alt="Q 2.2" />
+<figcaption aria-hidden="true">Q 2.2</figcaption>
+</figure>
+<h3 id="q2.3-animation">Q2.3 Animation</h3>
+<figure>
+<img src="images/q2.3.png" style="width:90.0%" alt="Q 2.3" />
+<figcaption aria-hidden="true">Q 2.3</figcaption>
+</figure>
+<h2 id="q3-simpleview2---culling-lighting-shading-programming">Q3
+SimpleView2 - culling, lighting, shading (programming)</h2>
+<h3 id="q3.1-culling">Q3.1 Culling</h3>
+<figure>
+<img src="images/q3.1.png" style="width:90.0%" alt="Q 3.1" />
+<figcaption aria-hidden="true">Q 3.1</figcaption>
+</figure>
+<h3 id="q3.2-lighting">Q3.2 Lighting</h3>
+<figure>
+<img src="images/q3.2.png" style="width:90.0%" alt="Q 3.2" />
+<figcaption aria-hidden="true">Q 3.2</figcaption>
+</figure>
+<h3 id="q3.3-shading">Q3.3 Shading</h3>
+<figure>
+<img src="images/q3.3.png" style="width:90.0%" alt="Q 3.3" />
+<figcaption aria-hidden="true">Q 3.3</figcaption>
+</figure>
+<h3 id="q3.4-animations">Q3.4 Animations</h3>
+<figure>
+<img src="images/q3.4.png" style="width:90.0%" alt="Q 3.4" />
+<figcaption aria-hidden="true">Q 3.4</figcaption>
+</figure>
+<p><strong>References</strong> 1. CP411 a4</p>
